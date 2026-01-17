@@ -21,6 +21,7 @@ O projeto é dividido em três partes obrigatórias (p1, p2 e p3) e uma parte b�
 
 ## 🧱 Estrutura do Repositório
 
+```
 .
 ├── p1/
 │   ├── Vagrantfile
@@ -37,6 +38,7 @@ O projeto é dividido em três partes obrigatórias (p1, p2 e p3) e uma parte b�
     ├── Vagrantfile
     ├── scripts/
     └── confs/
+```
 
 - **scripts/**: scripts de provisionamento e instalação  
 - **confs/**: arquivos de configuração (Kubernetes, ingress, etc.)
