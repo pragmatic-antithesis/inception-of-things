@@ -163,3 +163,17 @@ Comando que cria um alias para kubectl:
 ## Estrutura do projeto
 Comando que verifica a estrutura da Part 1:
 - `find p1 -maxdepth 2`
+
+--
+
+kubectl get ns
+kubectl get pods -n argocd
+kubectl port-forward svc/argocd-server -n argocd 8083:443
+
+localhost:8083
+
+kubectl -n argocd get secret argocd-initial-admin-secret \
+  -o jsonpath="{.data.password}" | base64 -d
+
+k3d cluster stop <tab>
+k3d cluster delete <tab>
