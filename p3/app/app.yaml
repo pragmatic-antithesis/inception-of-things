@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: app-container
-        image: maalexan/app-inwagner:v1       # Criar em: https://hub.docker.com/r/maalexan/app-inwagner
+        image: inwagner/42-iot:v1           # Criado em: https://hub.docker.com/r/inwagner/42-iot
         ports:
         - containerPort: 8081
         readinessProbe:
