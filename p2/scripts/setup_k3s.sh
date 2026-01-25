@@ -13,6 +13,6 @@ until kubectl get nodes >/dev/null 2>&1; do
   sleep 2
 done
 
-kubectl apply -f /vagrant/confs
+kubectl apply -f ./confs
 
 service $k3s restart
