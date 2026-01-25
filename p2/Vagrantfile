@@ -28,7 +28,7 @@ Vagrant.configure('2') do |config|
     server.vm.provider PROVIDER do |vbox|
       vm_specs(vbox, SERVER)
     end
-    server.vm.provision 'file', source: "./confs/", destination: "/home/vagrant/"
+    server.vm.provision 'file', source: 'confs/', destination: '/home/vagrant/'
     server.vm.provision 'shell', path: SCRIPT, env: { 'NODE_IP' => IP }
   end
 end
