@@ -1,16 +1,35 @@
-Vagrant.configure("2") do |config|
-  config.vm.box = "generic-x64/alpine319"
+# Vagrantfile
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
 
-  config.vm.define "inwagnerS" do |server|
-    server.vm.hostname = "inwagnerS"
-    server.vm.network "private_network", ip: "192.168.56.110"
+SERVER = 'inwagnerS'.freeze
+PROVIDER = 'virtualbox'.freeze
+PROVISION = 'shell'.freeze
+SCRIPT = './scripts/setup_k3s.sh'.freeze
+NETWORK = 'private_network'.freeze
+IP = '192.168.56.110'.freeze
+BOX = 'generic-x64/alpine319'.freeze
+BOX_VERSION = '4.3.12'.freeze
 
-    server.vm.provider "virtualbox" do |vbox|
-      vbox.memory = 512
-      vbox.cpus = 1
-      vbox.gui = false
+def vm_specs(vbox, hostname)
+  vbox.gui = false
+  vbox.name = hostname
+  vbox.memory = 512
+  vbox.cpus = 1
+end
+
+Vagrant.configure('2') do |config|
+  config.vm.box = BOX
+  config.vm.box_version = BOX_VERSION
+
+  config.vm.define SERVER do |server|
+    server.vm.hostname = SERVER
+    server.vm.network NETWORK, ip: IP
+
+    server.vm.provider PROVIDER do |vbox|
+      vm_specs(vbox, SERVER)
     end
 
-    server.vm.provision "shell", path: "scripts/setup_k3s.sh"
+    server.vm.provision PROVISION, path: SCRIPT
   end
 end
