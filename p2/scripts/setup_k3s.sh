@@ -1,22 +1,18 @@
 #!/bin/ash
-set -e
 
-IFACE=$(ip route | awk '/192.168.56.0\/24/ {print $3}')
-
-if [ -z "$IFACE" ]; then
-  echo "ERROR: não foi possível detectar a interface da rede privada"
-  exit 1
-fi
-
-ip addr replace ${NODE_IP}/24 brd 192.168.56.255 dev ${IFACE}
-ip link set ${IFACE} up
-ip route replace 192.168.56.0/24 dev ${IFACE}
+ip addr replace ${NODE_IP}/24 brd 192.168.56.255 dev eth1
+ip link set eth1 up
+ip route replace 192.168.56.0/24 dev eth1
 
 curl -sfL https://get.k3s.io | \
-  INSTALL_K3S_EXEC="--node-ip=${NODE_IP} --flannel-iface=${IFACE}" sh -
+    INSTALL_K3S_EXEC="--node-ip=${NODE_IP} --flannel-iface=eth1" sh -
+k3s="k3s"
 
-until /usr/local/bin/kubectl get nodes >/dev/null 2>&1; do
+# Wait for Kubernetes API to be ready
+until kubectl get nodes >/dev/null 2>&1; do
   sleep 2
 done
 
-/usr/local/bin/kubectl apply -f confs
+kubectl apply -f confs
+
+service $k3s restart
