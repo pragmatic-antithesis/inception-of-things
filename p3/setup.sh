@@ -52,7 +52,7 @@ if k3d cluster list | grep -q "$CLUSTER_NAME"; then
 else
   echo "Criando cluster K3d $CLUSTER_NAME..."
   k3d cluster create "$CLUSTER_NAME" \
-    -p "8081:8081@loadbalancer" \
+    -p "8888:8888@loadbalancer" \
     -p "8080:80@loadbalancer" \
     --agents 2
 fi
@@ -110,5 +110,5 @@ kubectl apply -f "$ARGOCD_PROJECT_YAML" -n "$ARGOCD_NAMESPACE"
 kubectl apply -f "$ARGOCD_APPLICATION_YAML" -n "$ARGOCD_NAMESPACE"
 
 echo "=== Setup concluído! ==="
-echo "Argo CD disponível em LoadBalancer (porta 8080 ou 8081)"
+echo "Argo CD disponível em LoadBalancer (porta 8080 ou 8888)"
 echo "Namespace dev pronto para deploy da sua aplicação"
